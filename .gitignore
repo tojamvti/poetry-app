@@ -1,0 +1,18 @@
+# Plik konfiguracyjny z danymi wrażliwymi
+.env
+
+# Środowisko wirtualne
+venv/
+
+# Pliki systemowe
+__pycache__/
+*.pyc
+*.pyo
+
+# Bazy danych / dumpy
+*.sqlite3
+*.db
+
+# IDE / edytory
+.vscode/
+.idea/

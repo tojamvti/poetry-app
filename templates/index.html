@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetry App</title>
+</head>
+<body>
+    <h1>Poems</h1>
+    <ul>
+        {% for poem in poems %}
+            <li>{{ poem[1] }}: {{ poem[2] }}</li>  <!-- Zakładając, że poem ma tytuł wiersza w 1. kolumnie, a treść w 2. -->
+        {% endfor %}
+    </ul>
+</body>
+</html>
