@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: poetry-app
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: gunicorn app:app
+    region: oregon
+    branch: master
+    runtime: python
+    autoDeploy: true
