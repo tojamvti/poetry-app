@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poetry App</title>
+    <title>Spis rozdziałów</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Poems</h1>
+    <h1>Spis rozdziałów</h1>
     <ul>
-        {% for poem in poems %}
-            <li>{{ poem[1] }}: {{ poem[2] }}</li>  <!-- Zakładając, że poem ma tytuł wiersza w 1. kolumnie, a treść w 2. -->
-        {% endfor %}
+    {% for id, title in chapters %}
+        <li><a href="{{ url_for('chapter', id=id) }}">{{ title }}</a></li>
+    {% endfor %}
     </ul>
 </body>
 </html>

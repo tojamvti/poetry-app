@@ -1,32 +1,42 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 import psycopg2
-import os
-from dotenv import load_dotenv
-
-# Wczytaj zmienne środowiskowe
-load_dotenv()
 
 app = Flask(__name__)
 
-# Funkcja do połączenia z bazą danych
+DB_CONFIG = {
+    "dbname": "mybookdb",
+    "user": "postgres",
+    "password": "haaslo",
+    "host": "127.0.0.1",
+    "port": "5433"
+}
+
 def get_db_connection():
-    conn = psycopg2.connect(
-        host=os.getenv('DB_HOST'),
-        database=os.getenv('DB_NAME'),
-        user=os.getenv('DB_USER'),
-        password=os.getenv('DB_PASSWORD')
-    )
+    conn = psycopg2.connect(**DB_CONFIG)
     return conn
 
-@app.route('/')
+@app.route("/")
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM poems;')
-    poems = cur.fetchall()
+    cur.execute("SELECT id, title FROM chapters ORDER BY id;")
+    chapters = cur.fetchall()
     cur.close()
     conn.close()
-    return render_template('index.html', poems=poems)
+    return render_template("index.html", chapters=chapters)
 
-if __name__ == '__main__':
+@app.route("/chapter/<int:id>")
+def chapter(id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT title, content FROM chapters WHERE id = %s;", (id,))
+    chapter = cur.fetchone()
+    cur.close()
+    conn.close()
+    if chapter is None:
+        abort(404)
+    title, content = chapter
+    return render_template("chapter.html", title=title, content=content)
+
+if __name__ == "__main__":
     app.run(debug=True)

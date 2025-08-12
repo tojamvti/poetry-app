@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <div class="chapter-content">{{ content }}</div>
+    <a href="{{ url_for('index') }}" class="back-link">← Powrót do spisu rozdziałów</a>
+</body>
+</html>
